@@ -19,7 +19,7 @@ export default function Layout() {
         <Toolbar>
           <CameraIcon sx={{ mr: 2 }} />
           <Typography component={Link} to={"/"} variant="h6" color="inherit" noWrap sx={{ textDecoration: 'none' }} >
-            案件管理アプリ
+            読書管理アプリ
           </Typography>
         </Toolbar>
       </AppBar>
