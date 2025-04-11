@@ -1,24 +1,42 @@
-import logo from './logo.svg';
-import './App.css';
+// import { createTheme } from '@mui/material/styles';
+import Layout from "./common/Layout";
+import {Routes,Route} from "react-router-dom";
+import { BookIndex } from './page/books/BookIndex';
+import { BookSearch } from './page/books/BookSearch';
+import { BookEdit } from './page/books/BookEdit';
+import { BookDetail } from './page/books/BookDetail';
+import { useEffect, useState } from 'react';
+import { useParsist } from "./hooks/useParsist";
+import { Input, TextField, Typography } from "@mui/material";
+import { usePracice } from "./hooks/usePractice";
 
-function App() {
+ function App() {
+//   const[data,loading,error] = usePracice('https://jsonplaceholder.typicode.com/posts') 
+
+//   console.log(data);
+
+//   return (
+//     <div>
+//       {data.map((data)=>{
+//         return <p>{data.id}</p>
+//       })}
+//     </div>
+//   );
+  const STRAGE_KEY ='books';
+
+  const[books,setBooks] = useParsist(STRAGE_KEY);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Routes>
+      <Route element={<Layout/>}>
+        <Route index element={<BookIndex books={books} setBooks={setBooks}/>}/>
+        {/* <Route path="serchResult" element={<BookIndex books={books} />}/> */}
+        <Route path='search' element={<BookSearch book={books} setBook={setBooks}/>}/>
+        <Route path='edit' element={<BookEdit books={books}/>}>
+          <Route path=':id' element={<BookDetail books={books} setBooks={setBooks}/>}/>
+        </Route>
+      </Route>
+    </Routes>
   );
 }
 
